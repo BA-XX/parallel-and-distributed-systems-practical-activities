@@ -1,0 +1,8 @@
+name: practical-activity-1
+
+services:
+  broker:
+    image: apache/kafka-native:4.1.1
+    container_name: kafka-broker
+    ports:
+      - "9092:9092"
