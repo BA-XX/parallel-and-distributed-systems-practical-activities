@@ -1,6 +1,7 @@
 package site.aloui.bankAccountService.dtos;
 
 import lombok.*;
+import site.aloui.bankAccountService.entities.Customer;
 import site.aloui.bankAccountService.enums.AccountType;
 
 import java.util.Date;
@@ -15,4 +16,5 @@ public class BankAccountResponseDTO {
     private Double balance;
     private String currency;
     private AccountType type;
+    private Customer customer;
 }

@@ -16,6 +16,7 @@ public class BankAccountMapperImpl implements IBankAccountMapper {
                 .balance(account.getBalance())
                 .type(account.getType())
                 .currency(account.getCurrency())
+                .customer(account.getCustomer())
                 .build();
     }
 

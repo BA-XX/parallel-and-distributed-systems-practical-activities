@@ -1,9 +1,6 @@
 package site.aloui.bankAccountService.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import site.aloui.bankAccountService.enums.AccountType;
 
@@ -23,5 +20,7 @@ public class BankAccount {
     private Double balance;
     private String currency;
     private AccountType type;
+    @ManyToOne
+    private Customer customer;
 
 }
