@@ -28,20 +28,20 @@ public class AccountAggregate {
 
         log.info("[CommandHandler] Received AddAccountCommand");
 
-        if (command.initialBalance() <= 0)
+        if (command.getInitialBalance() <= 0)
             throw new IllegalArgumentException("initial balance must be greater than 0.");
         AggregateLifecycle.apply(
                 AccountCreatedEvent.builder()
-                        .accountId(command.id())
+                        .accountId(command.getId())
                         .status(AccountStatus.CREATED)
-                        .currency(command.currency())
-                        .initialBalance(command.initialBalance())
+                        .currency(command.getCurrency())
+                        .initialBalance(command.getInitialBalance())
                         .build()
         );
 
         AggregateLifecycle.apply(
                 AccountActivatedEvent.builder()
-                        .accountId(command.id())
+                        .accountId(command.getId())
                         .build()
         );
     }
@@ -64,14 +64,14 @@ public class AccountAggregate {
     public void handle(CreditAccountCommand command) {
         log.info("[CommandHandler] Received CreditAccountCommand");
         if (!status.equals(AccountStatus.ACTIVATED))
-            throw new IllegalArgumentException(String.format("Account %s  not ACTIVATED", command.accountId()));
-        if (command.amount() <= 0)
+            throw new IllegalArgumentException(String.format("Account %s  not ACTIVATED", command.getAccountId()));
+        if (command.getAmount() <= 0)
             throw new IllegalArgumentException("Amount must be greater than 0.");
 
         AggregateLifecycle.apply(
                 AccountCreditedEvent.builder()
-                        .accountId(command.accountId())
-                        .amount(command.amount())
+                        .accountId(command.getAccountId())
+                        .amount(command.getAmount())
                         .build()
         );
     }
@@ -87,16 +87,16 @@ public class AccountAggregate {
         log.info("[CommandHandler] Received DebitAccountCommand");
 
         if (!status.equals(AccountStatus.ACTIVATED))
-            throw new IllegalArgumentException(String.format("Account %s  not ACTIVATED", command.accountId()));
-        if (balance < command.amount())
+            throw new IllegalArgumentException(String.format("Account %s  not ACTIVATED", command.getAccountId()));
+        if (balance < command.getAmount())
             throw new IllegalArgumentException("Insufficient funds.");
-        if (command.amount() <= 0)
+        if (command.getAmount() <= 0)
             throw new IllegalArgumentException("Amount must be greater than 0.");
 
         AggregateLifecycle.apply(
                 AccountDebitedEvent.builder()
-                        .accountId(command.accountId())
-                        .amount(command.amount())
+                        .accountId(command.getAccountId())
+                        .amount(command.getAmount())
                         .build()
         );
     }
@@ -110,13 +110,13 @@ public class AccountAggregate {
     @CommandHandler
     public void on(UpdateAccountStatusCommand command) {
         log.info("[CommandHandler] Received UpdateAccountStatusCommand");
-        if (status.equals(command.status()))
-            throw new IllegalArgumentException(String.format("Account %s is already %s", command.accountId(), command.status()));
+        if (status.equals(command.getStatus()))
+            throw new IllegalArgumentException(String.format("Account %s is already %s", command.getAccountId(), command.getStatus()));
 
         AggregateLifecycle.apply(
                 AccountStatusUpdatedEvent.builder()
-                        .accountId(command.accountId())
-                        .status(command.status())
+                        .accountId(command.getAccountId())
+                        .status(command.getStatus())
                         .build()
         );
     }

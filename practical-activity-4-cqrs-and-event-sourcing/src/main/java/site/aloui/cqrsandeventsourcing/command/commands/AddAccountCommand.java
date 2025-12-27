@@ -1,13 +1,18 @@
 package site.aloui.cqrsandeventsourcing.command.commands;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Builder
-public record AddAccountCommand(
+@Getter
+@AllArgsConstructor
+public class AddAccountCommand {
 
-       @TargetAggregateIdentifier String id,
-        double initialBalance,
-        String currency
-) {
+    @TargetAggregateIdentifier
+    private String id;
+    private double initialBalance;
+    private String currency;
+
 }

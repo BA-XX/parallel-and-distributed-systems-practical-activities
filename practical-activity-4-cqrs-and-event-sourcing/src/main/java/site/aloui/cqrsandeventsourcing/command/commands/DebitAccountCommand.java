@@ -1,11 +1,15 @@
 package site.aloui.cqrsandeventsourcing.command.commands;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Builder
-public record DebitAccountCommand(
-        @TargetAggregateIdentifier String accountId,
-        double amount
-) {
+@Getter
+@AllArgsConstructor
+public class DebitAccountCommand {
+    @TargetAggregateIdentifier
+    private String accountId;
+    private double amount;
 }
